@@ -1,0 +1,359 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-pixel: var(--font-pixel), monospace;
+  --font-vt: var(--font-vt), monospace;
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-foreground: var(--foreground);
+  --color-background: var(--background);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+  color-scheme: light;
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+.dark {
+  color-scheme: dark;
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+  --chart-1: oklch(0.87 0 0);
+  --chart-2: oklch(0.556 0 0);
+  --chart-3: oklch(0.439 0 0);
+  --chart-4: oklch(0.371 0 0);
+  --chart-5: oklch(0.269 0 0);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.556 0 0);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    color-scheme: dark;
+    --background: oklch(0.145 0 0);
+    --foreground: oklch(0.985 0 0);
+    --card: oklch(0.205 0 0);
+    --card-foreground: oklch(0.985 0 0);
+    --popover: oklch(0.205 0 0);
+    --popover-foreground: oklch(0.985 0 0);
+    --primary: oklch(0.922 0 0);
+    --primary-foreground: oklch(0.205 0 0);
+    --secondary: oklch(0.269 0 0);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.269 0 0);
+    --muted-foreground: oklch(0.708 0 0);
+    --accent: oklch(0.269 0 0);
+    --accent-foreground: oklch(0.985 0 0);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.556 0 0);
+    --chart-1: oklch(0.87 0 0);
+    --chart-2: oklch(0.556 0 0);
+    --chart-3: oklch(0.439 0 0);
+    --chart-4: oklch(0.371 0 0);
+    --chart-5: oklch(0.269 0 0);
+    --sidebar: oklch(0.205 0 0);
+    --sidebar-foreground: oklch(0.985 0 0);
+    --sidebar-primary: oklch(0.488 0.243 264.376);
+    --sidebar-primary-foreground: oklch(0.985 0 0);
+    --sidebar-accent: oklch(0.269 0 0);
+    --sidebar-accent-foreground: oklch(0.985 0 0);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.556 0 0);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* ---------------- Minecraft achievements theme ---------------- */
+
+.font-mc {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.02em;
+}
+
+.font-mc-body {
+  font-family: var(--font-vt);
+  letter-spacing: 0.01em;
+}
+
+/* Cave background for the tree viewport */
+.mc-tree-bg {
+  background-color: #262626;
+  background-image: url("/mc-bg.png");
+  background-size: 480px auto;
+  background-repeat: repeat;
+  image-rendering: pixelated;
+}
+
+/* Top / bottom panels resemble the GUI chrome */
+.mc-panel-top {
+  background: #313131;
+  border-bottom: 4px solid #1a1a1a;
+  box-shadow: inset 0 2px 0 #4a4a4a;
+}
+
+.mc-panel-bottom {
+  background: #313131;
+  border-top: 4px solid #1a1a1a;
+  box-shadow: inset 0 -2px 0 #202020;
+}
+
+/* Achievement slot: beveled stone frame like the Minecraft GUI */
+.mc-slot {
+  background: #8b8b8b;
+  border: 4px solid;
+  border-color: #ffffff #373737 #373737 #ffffff;
+  box-shadow:
+    inset 2px 2px 0 #c6c6c6,
+    inset -2px -2px 0 #555555,
+    0 0 0 1px #000;
+  cursor: pointer;
+}
+
+/* "Goal" achievements: rounded gold-ish frame */
+.mc-slot--goal {
+  border-radius: 12px;
+  border-color: #f7d060 #8a6f1e #8a6f1e #f7d060;
+  background: #b58b2a;
+  box-shadow:
+    inset 2px 2px 0 #ffe28a,
+    inset -2px -2px 0 #6e561a,
+    0 0 0 1px #000;
+}
+
+/* "Challenge" achievements: ornate gold frame */
+.mc-slot--challenge {
+  border-radius: 16px;
+  border-color: #ffd94a #7a5b12 #7a5b12 #ffd94a;
+  background: #c99b26;
+  box-shadow:
+    inset 2px 2px 0 #ffe89a,
+    inset -2px -2px 0 #5f4610,
+    0 0 0 1px #000,
+    0 0 12px rgba(255, 207, 63, 0.35);
+}
+
+/* States */
+.mc-slot--locked {
+  filter: brightness(0.28) grayscale(0.9) contrast(0.85);
+  opacity: 0.85;
+}
+
+.mc-slot--locked:hover {
+  filter: brightness(0.5) grayscale(0.7);
+  opacity: 1;
+}
+
+.mc-slot--available {
+  filter: brightness(0.92);
+}
+
+.mc-slot--done {
+  filter: none;
+  box-shadow:
+    inset 2px 2px 0 #d8f5c6,
+    inset -2px -2px 0 #3f6b2c,
+    0 0 0 1px #000,
+    0 0 10px rgba(127, 209, 91, 0.45);
+  background: #6fae4e;
+  border-color: #b6e79a #2f5220 #2f5220 #b6e79a;
+}
+
+.mc-slot--done.mc-slot--challenge,
+.mc-slot--done.mc-slot--goal {
+  background: #c99b26;
+  border-color: #ffd94a #7a5b12 #7a5b12 #ffd94a;
+  box-shadow:
+    inset 2px 2px 0 #ffe89a,
+    inset -2px -2px 0 #5f4610,
+    0 0 0 1px #000,
+    0 0 14px rgba(255, 207, 63, 0.6);
+}
+
+/* Minecraft-style tooltip */
+.mc-tooltip {
+  background: #16001f;
+  padding: 10px 12px;
+  border: 2px solid;
+  border-image: linear-gradient(180deg, #4b1a8a, #26094d) 1;
+  box-shadow: 0 0 0 2px #0b0016, 0 6px 18px rgba(0, 0, 0, 0.6);
+}
+
+/* Per-semester header buttons */
+.mc-sem-btn {
+  padding: 6px 4px;
+  color: #cfcfcf;
+  background: #2f2f2f;
+  border: 3px solid;
+  border-color: #565656 #141414 #141414 #565656;
+  box-shadow: inset 1px 1px 0 #3f3f3f, 0 0 0 1px #000;
+  cursor: pointer;
+  transition: filter 0.1s ease, background 0.1s ease;
+}
+
+.mc-sem-btn:hover {
+  background: #3c4a2e;
+  border-color: #7f9a5e #1c2513 #1c2513 #7f9a5e;
+  color: #eaf5dc;
+}
+
+.mc-sem-btn[data-done] {
+  background: #4f7a36;
+  border-color: #8ecb63 #274116 #274116 #8ecb63;
+  color: #eefbe2;
+  box-shadow: inset 1px 1px 0 #6fae4e, 0 0 0 1px #000, 0 0 10px rgba(127, 209, 91, 0.4);
+}
+
+.mc-sem-btn:active {
+  transform: translateY(1px);
+}
+
+/* Chunky Minecraft-style buttons */
+.mc-button {
+  background: #6b6b6b;
+  color: #f4f4f4;
+  padding: 8px 14px;
+  border: 3px solid;
+  border-color: #b0b0b0 #2b2b2b #2b2b2b #b0b0b0;
+  box-shadow: inset 1px 1px 0 #8f8f8f, 0 0 0 1px #000;
+  cursor: pointer;
+}
+
+.mc-button:hover {
+  background: #7c8b6a;
+  border-color: #c4d6a8 #33401f #33401f #c4d6a8;
+}
+
+.mc-button:active {
+  transform: translateY(1px);
+}
+
+
+.mc-xp-bar {
+  border: 2px solid #0d0d0d;
+  border-radius: 2px;
+  background: #1a1a1a;
+  box-shadow:
+    inset 0 2px 0 rgba(0, 0, 0, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  image-rendering: pixelated;
+}
+
+.mc-xp-bar__fill {
+  background: linear-gradient(to bottom, #8be23d 0%, #6cc32b 45%, #58a821 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transition: width 200ms ease-out;
+}
+
+.mc-xp-bar__label {
+  color: #ffffff;
+  text-shadow:
+    1px 1px 0 #000,
+    -1px 1px 0 #000,
+    1px -1px 0 #000,
+    -1px -1px 0 #000;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
