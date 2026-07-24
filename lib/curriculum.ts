@@ -559,7 +559,7 @@ export const CURRICULUM: Course[] = [
   {
     id: "CIT-2013",
     subject: "Inteligencia Artificial",
-    achievement: "Shhh… Machines Are Learnings",
+    achievement: "Shhh… Machines Are Learning",
     description: "Completa el curso Inteligencia Artificial y da vida a maquinas que aprenden.",
     semester: 8,
     credits: 6,
