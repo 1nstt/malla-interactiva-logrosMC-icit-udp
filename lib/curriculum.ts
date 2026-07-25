@@ -361,7 +361,7 @@ export const CURRICULUM: Course[] = [
   {
     id: "CIG-1013",
     subject: "Ingles II",
-    achievement: "I actually got it",
+    achievement: "Wait... I actually got it",
     description: "Completa el curso Ingles II y comunicate con mayor soltura.",
     semester: 5,
     credits: 5,
