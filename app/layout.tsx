@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   description:
     'Explora la malla de Ingeniería Civil en Informática y Telecomunicaciones como un árbol de logros al estilo Minecraft.',
   generator: 'v0.app',
+  icons: {
+    icon: '/minecraft.svg',
+  },
 }
 
 export const viewport: Viewport = {

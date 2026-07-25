@@ -251,7 +251,7 @@ export const CURRICULUM: Course[] = [
   {
     id: "CBF-1002",
     subject: "Electricidad y Magnetismo",
-    achievement: "Maxwell? Estas loco",
+    achievement: "Cargas, campos y Maxwell",
     description: "Completa el curso Electricidad y Magnetismo y domina las fuerzas invisibles.",
     semester: 4,
     credits: 7,

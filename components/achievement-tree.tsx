@@ -246,7 +246,7 @@ export function AchievementTree() {
             Arbol de Logros
           </h1>
           <p className="font-mc-body text-base leading-none text-[#9a9a9a] sm:text-lg">
-            Ing. Civil en Informatica y Telecomunicaciones
+            Ing. Civil en Informatica y Telecomunicaciones UDP, Malla 2020
           </p>
         </div>
 
@@ -440,6 +440,13 @@ export function AchievementTree() {
           >
             Reiniciar
           </button>
+        </div>
+      <div className="flex shrink-0 items-center gap-2 pl-2">
+          <a href="https://github.com/1nstt" target="_blank" rel="noopener noreferrer" aria-label="Perfil de GitHub" className="flex h-8 w-8 items-center justify-center transition-transform hover:scale-110">
+            <img src="/github.svg" alt="GitHub" className="h-6 w-6" />
+          </a>
+          <img src="/heart.png" alt="" aria-hidden="true" className="h-5 w-5" />
+          <span className="font-mc-body text-base text-[#a8a8a8] whitespace-nowrap">Hecho por Renato Y.</span>
         </div>
       </footer>
     </div>
