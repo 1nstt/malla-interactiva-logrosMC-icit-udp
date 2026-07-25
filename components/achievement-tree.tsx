@@ -383,8 +383,8 @@ export function AchievementTree() {
               >
                 <IconFor
                   name={c.icon}
-                  className={iconClass(done, available)}
-                  style={{ color: done || available ? AREA_COLORS[c.area] : undefined }}
+                  className={iconClass(done)}
+                  style={{ color: done ? AREA_COLORS[c.area] : undefined }}
                 />
                 {!done && !available && (
                   <span className="pointer-events-none absolute -bottom-1.5 -right-1.5 grid h-5 w-5 place-items-center border-2 border-[#0d0d0d] bg-[#3a3a3a]">
@@ -483,9 +483,8 @@ function mcSlotClass(type: CourseType, done: boolean, available: boolean, dim: b
   return `${base} ${variant} ${state} ${dimmed}`.trim()
 }
 
-function iconClass(done: boolean, available: boolean) {
+function iconClass(done: boolean) {
   if (done) return "h-7 w-7 drop-shadow-[0_1px_0_rgba(0,0,0,0.7)]"
-  if (available) return "h-7 w-7"
   return "h-7 w-7 text-[#565656]"
 }
 

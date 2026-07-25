@@ -245,7 +245,17 @@
 }
 
 .mc-slot--available {
-  filter: brightness(0.92);
+  filter: brightness(0.55) contrast(0.9);
+  border-color: #ffcf3f #8a6f1e #8a6f1e #ffcf3f;
+  box-shadow:
+    inset 2px 2px 0 #c6c6c6,
+    inset -2px -2px 0 #555555,
+    0 0 0 1px #000,
+    0 0 6px rgba(255, 207, 63, 0.35);
+}
+
+.mc-slot--available:hover {
+  filter: brightness(0.75) contrast(0.95);
 }
 
 .mc-slot--done {
