@@ -710,20 +710,10 @@ function MinecraftTooltip({
     const centeredLeft = x - TOOLTIP_W / 2
     const left = Math.max(12, Math.min(centeredLeft, vw - TOOLTIP_W - 12))
 
-    // Prefer placing ABOVE the node (offset vertically by 35px so node & horizontal arrows remain clear)
-    let top = y - TOOLTIP_H - 35
-    let placement: "above" | "below" = "above"
-
-    // If placing above goes off-screen near top header (< 50px), place it BELOW the node
-    if (top < 50) {
-      top = y + 45
-      placement = "below"
-    }
-
-    // If placing below hits the footer, clamp it above footer
-    if (placement === "below" && top + TOOLTIP_H > vh - footerOffset) {
-      top = Math.max(50, vh - TOOLTIP_H - footerOffset)
-    }
+    // Always position DOWNWARDS below the touched node
+    const rawTop = y + 35
+    const maxTop = Math.max(50, vh - TOOLTIP_H - footerOffset)
+    const top = Math.min(rawTop, maxTop)
 
     return (
       <div

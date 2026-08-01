@@ -1,24 +1,24 @@
 export type CourseType = "normal" | "goal" | "challenge"
 
-/** Area academica segun la malla (usada para el color del icono) */
+/** Área académica según la malla (usada para el color del ícono) */
 export type CourseArea = "PC" | "SD" | "TIN" | "FI" | "TIC" | "AN" | "ELEC"
 
 export interface Course {
-  /** Codigo de la asignatura (id unico) */
+  /** Código de la asignatura (id único) */
   id: string
   /** Asignatura real de la malla */
   subject: string
   /** Nombre del logro estilo Minecraft */
   achievement: string
-  /** Motivo / descripcion del logro */
+  /** Motivo / descripción del logro */
   description: string
   /** Semestre (1..11) */
   semester: number
-  /** Creditos */
+  /** Créditos */
   credits: number
-  /** Area academica */
+  /** Área académica */
   area: CourseArea
-  /** Prerrequisitos (codigos) */
+  /** Prerrequisitos (códigos) */
   prereqs: string[]
   /** Nombre del icono lucide */
   icon: string
@@ -27,22 +27,22 @@ export interface Course {
 }
 
 export const AREA_LABELS: Record<CourseArea, string> = {
-  PC: "Ciencias Basicas",
-  SD: "Ciencias de la Ingenieria",
-  TIN: "Formacion Integral",
-  FI: "Informatica",
+  PC: "Ciencias Básicas",
+  SD: "Ciencias de la Ingeniería",
+  TIN: "Formación Integral",
+  FI: "Informática",
   TIC: "Telecomunicaciones",
-  AN: "Proyectos / Analisis",
-  ELEC: "Practicas y Titulacion",
+  AN: "Proyectos / Análisis",
+  ELEC: "Prácticas y Titulación",
 }
 
 export const CURRICULUM: Course[] = [
   // ---------------- Semestre 1 ----------------
   {
     id: "CBM-1000",
-    subject: "Algebra y Geometria",
-    achievement: "Logico, no?",
-    description: "Completa el curso Algebra y Geometria y domina vectores, rectas y planos.",
+    subject: "Álgebra y Geometría",
+    achievement: "¿Lógico, no?",
+    description: "Completa el curso Álgebra y Geometría y domina vectores, rectas y planos.",
     semester: 1,
     credits: 7,
     area: "PC",
@@ -52,9 +52,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CBM-1001",
-    subject: "Calculo I",
-    achievement: "Derivando!",
-    description: "Completa el curso Calculo I y domina los limites y las derivadas.",
+    subject: "Cálculo I",
+    achievement: "¡Derivando!",
+    description: "Completa el curso Cálculo I y domina los límites y las derivadas.",
     semester: 1,
     credits: 7,
     area: "PC",
@@ -64,9 +64,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CBQ-1000",
-    subject: "Quimica",
+    subject: "Química",
     achievement: "Alquimista Moderno",
-    description: "Completa el curso Quimica y comprende la materia a nivel atomico.",
+    description: "Completa el curso Química y comprende la materia a nivel atómico.",
     semester: 1,
     credits: 6,
     area: "PC",
@@ -76,9 +76,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-1000",
-    subject: "Programacion",
-    achievement: "Hola, Mundo!",
-    description: "Completa el curso Programacion y escribe tu primera linea de codigo.",
+    subject: "Programación",
+    achievement: "¡Hola, Mundo!",
+    description: "Completa el curso Programación y escribe tu primera línea de código.",
     semester: 1,
     credits: 6,
     area: "SD",
@@ -88,9 +88,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "FIC-1000",
-    subject: "Comunicacion para la Ingenieria",
+    subject: "Comunicación para la Ingeniería",
     achievement: "La Voz del Ingeniero",
-    description: "Completa el curso Comunicacion para la Ingenieria y aprende a transmitir tus ideas.",
+    description: "Completa el curso Comunicación para la Ingeniería y aprende a transmitir tus ideas.",
     semester: 1,
     credits: 5,
     area: "TIN",
@@ -102,9 +102,9 @@ export const CURRICULUM: Course[] = [
   // ---------------- Semestre 2 ----------------
   {
     id: "CBM-1002",
-    subject: "Algebra Lineal",
+    subject: "Álgebra Lineal",
     achievement: "Domador de Matrices",
-    description: "Completa el curso Algebra Lineal y domina los espacios vectoriales.",
+    description: "Completa el curso Álgebra Lineal y domina los espacios vectoriales.",
     semester: 2,
     credits: 6,
     area: "PC",
@@ -114,9 +114,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CBM-1003",
-    subject: "Calculo II",
+    subject: "Cálculo II",
     achievement: "Integrador Implacable",
-    description: "Completa el curso Calculo II y conquista la integracion.",
+    description: "Completa el curso Cálculo II y conquista la integración.",
     semester: 2,
     credits: 6,
     area: "PC",
@@ -126,9 +126,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CBF-1000",
-    subject: "Mecanica",
+    subject: "Mecánica",
     achievement: "Newtoniano",
-    description: "Completa el curso Mecanica y comprende como se mueve el universo.",
+    description: "Completa el curso Mecánica y comprende cómo se mueve el universo.",
     semester: 2,
     credits: 7,
     area: "PC",
@@ -138,9 +138,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-1010",
-    subject: "Programacion Avanzada",
+    subject: "Programación Avanzada",
     achievement: "Programador con clase",
-    description: "Completa el curso Programacion Avanzada y domina la orientacion a objetos.",
+    description: "Completa el curso Programación Avanzada y domina la orientación a objetos.",
     semester: 2,
     credits: 6,
     area: "SD",
@@ -152,7 +152,7 @@ export const CURRICULUM: Course[] = [
     id: "CFG-1",
     subject: "CFG",
     achievement: "Mente Renacentista I",
-    description: "Completa un Curso de Formacion General y amplia tus horizontes.",
+    description: "Completa un Curso de Formación General y amplía tus horizontes.",
     semester: 2,
     credits: 5,
     area: "TIN",
@@ -165,7 +165,7 @@ export const CURRICULUM: Course[] = [
   {
     id: "CBM-1005",
     subject: "Ecuaciones Diferenciales",
-    achievement: "Soy diferencial",
+    achievement: "¿Euler... eres tú?",
     description: "Completa el curso Ecuaciones Diferenciales y modela el cambio continuo.",
     semester: 3,
     credits: 6,
@@ -176,9 +176,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CBM-1006",
-    subject: "Calculo III",
-    achievement: "Rompiendo dimensiones!",
-    description: "Completa el curso Calculo III y domina el calculo multivariable.",
+    subject: "Cálculo III",
+    achievement: "¡Rompiendo dimensiones!",
+    description: "Completa el curso Cálculo III y domina el cálculo multivariable.",
     semester: 3,
     credits: 6,
     area: "PC",
@@ -189,8 +189,8 @@ export const CURRICULUM: Course[] = [
   {
     id: "CBF-1001",
     subject: "Calor y Ondas",
-    achievement: "Que calor hace!",
-    description: "Completa el curso Calor y Ondas y entiende la energia en movimiento.",
+    achievement: "¡Cuánta energía!",
+    description: "Completa el curso Calor y Ondas y entiende la energía en movimiento.",
     semester: 3,
     credits: 7,
     area: "PC",
@@ -201,8 +201,8 @@ export const CURRICULUM: Course[] = [
   {
     id: "CIT-2006",
     subject: "Estructura de Datos y Algoritmos",
-    achievement: "Divide y venceras",
-    description: "Completa el curso Estructura de Datos y Algoritmos y organiza la informacion con eficiencia.",
+    achievement: "Divide y vencerás",
+    description: "Completa el curso Estructura de Datos y Algoritmos y organiza la información con eficiencia.",
     semester: 3,
     credits: 6,
     area: "FI",
@@ -226,9 +226,9 @@ export const CURRICULUM: Course[] = [
   // ---------------- Semestre 4 ----------------
   {
     id: "CIT-2204",
-    subject: "Probabilidad y Estadistica",
+    subject: "Probabilidad y Estadística",
     achievement: "A posteriori",
-    description: "Completa el curso Probabilidad y Estadistica y aprende a predecir lo incierto.",
+    description: "Completa el curso Probabilidad y Estadística y aprende a predecir lo incierto.",
     semester: 4,
     credits: 6,
     area: "SD",
@@ -238,9 +238,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-2107",
-    subject: "Electronica y Electrotecnia",
+    subject: "Electrónica y Electrotecnia",
     achievement: "Circuito cerrado",
-    description: "Completa el curso Electronica y Electrotecnia y controla el flujo de la corriente.",
+    description: "Completa el curso Electrónica y Electrotecnia y controla el flujo de la corriente.",
     semester: 4,
     credits: 6,
     area: "PC",
@@ -274,9 +274,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-2008",
-    subject: "Desarrollo Web y Movil",
+    subject: "Desarrollo Web y Móvil",
     achievement: "Constructor de la Web",
-    description: "Completa el curso Desarrollo Web y Movil y crea aplicaciones para todos.",
+    description: "Completa el curso Desarrollo Web y Móvil y crea aplicaciones para todos.",
     semester: 4,
     credits: 6,
     area: "FI",
@@ -286,9 +286,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIG-1012",
-    subject: "Ingles I",
+    subject: "Inglés I",
     achievement: "Can you hear me?",
-    description: "Completa el curso Ingles I y da tus primeros pasos en el idioma global.",
+    description: "Completa el curso Inglés I y da tus primeros pasos en el idioma global.",
     semester: 4,
     credits: 5,
     area: "TIN",
@@ -300,9 +300,9 @@ export const CURRICULUM: Course[] = [
   // ---------------- Semestre 5 ----------------
   {
     id: "CII-2750",
-    subject: "Optimizacion",
-    achievement: "Optimo global alcanzado",
-    description: "Completa el curso Optimizacion y encuentra siempre la mejor solucion.",
+    subject: "Optimización",
+    achievement: "Óptimo global alcanzado",
+    description: "Completa el curso Optimización y encuentra siempre la mejor solución.",
     semester: 5,
     credits: 6,
     area: "SD",
@@ -338,7 +338,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-2009",
     subject: "Bases de Datos Avanzadas",
     achievement: "Maestro de los Datos",
-    description: "Completa el curso Bases de Datos Avanzadas y domina el manejo masivo de informacion.",
+    description: "Completa el curso Bases de Datos Avanzadas y domina el manejo masivo de información.",
     semester: 5,
     credits: 6,
     area: "FI",
@@ -350,7 +350,7 @@ export const CURRICULUM: Course[] = [
     id: "CFG-2",
     subject: "CFG",
     achievement: "Mente Renacentista II",
-    description: "Completa un Curso de Formacion General y sigue creciendo.",
+    description: "Completa un Curso de Formación General y sigue creciendo.",
     semester: 5,
     credits: 5,
     area: "TIN",
@@ -360,9 +360,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIG-1013",
-    subject: "Ingles II",
+    subject: "Inglés II",
     achievement: "Wait... I actually got it",
-    description: "Completa el curso Ingles II y comunicate con mayor soltura.",
+    description: "Completa el curso Inglés II y comunícate con mayor soltura.",
     semester: 5,
     credits: 5,
     area: "TIN",
@@ -372,9 +372,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-4000",
-    subject: "Practica Profesional I",
+    subject: "Práctica Profesional I",
     achievement: "Primeros Pasos en el Mundo Real",
-    description: "Completa tu Practica Profesional I y aplica lo aprendido en la industria.",
+    description: "Completa tu Práctica Profesional I y aplica lo aprendido en la industria.",
     semester: 5,
     credits: 7,
     area: "ELEC",
@@ -398,9 +398,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-2109",
-    subject: "Arquitectura y Organizacion de Computadores",
+    subject: "Arquitectura y Organización de Computadores",
     achievement: "Bajo nivel",
-    description: "Completa el curso Arquitectura y Organizacion de Computadores y conoce el hardware por dentro.",
+    description: "Completa el curso Arquitectura y Organización de Computadores y conoce el hardware por dentro.",
     semester: 6,
     credits: 6,
     area: "TIC",
@@ -412,7 +412,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-2110",
     subject: "Señales y Sistemas",
     achievement: "Maestro del Dominio de la Frecuencia",
-    description: "Completa el curso Señales y Sistemas y domina el analisis en frecuencia.",
+    description: "Completa el curso Señales y Sistemas y domina el análisis en frecuencia.",
     semester: 6,
     credits: 6,
     area: "TIC",
@@ -424,7 +424,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-2010",
     subject: "Sistemas Operativos",
     achievement: "Llamada del sistema",
-    description: "Completa el curso Sistemas Operativos y controla el corazon del computador.",
+    description: "Completa el curso Sistemas Operativos y controla el corazón del computador.",
     semester: 6,
     credits: 6,
     area: "FI",
@@ -436,7 +436,7 @@ export const CURRICULUM: Course[] = [
     id: "CFG-3",
     subject: "CFG",
     achievement: "Mente renacentista III",
-    description: "Completa un Curso de Formacion General y mantente en constante aprendizaje.",
+    description: "Completa un Curso de Formación General y mantente en constante aprendizaje.",
     semester: 6,
     credits: 5,
     area: "TIN",
@@ -446,9 +446,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIG-1014",
-    subject: "Ingles III",
+    subject: "Inglés III",
     achievement: "No More Subtitles",
-    description: "Completa el curso Ingles III y alcanza el dominio profesional del ingles.",
+    description: "Completa el curso Inglés III y alcanza el dominio profesional del inglés.",
     semester: 6,
     credits: 5,
     area: "TIN",
@@ -460,9 +460,9 @@ export const CURRICULUM: Course[] = [
   // ---------------- Semestre 7 ----------------
   {
     id: "CIT-2206",
-    subject: "Gestion Organizacional",
-    achievement: "Lider de Equipos",
-    description: "Completa el curso Gestion Organizacional y aprende a dirigir personas y proyectos.",
+    subject: "Gestión Organizacional",
+    achievement: "Líder de Equipos",
+    description: "Completa el curso Gestión Organizacional y aprende a dirigir personas y proyectos.",
     semester: 7,
     credits: 6,
     area: "SD",
@@ -486,7 +486,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-2111",
     subject: "Comunicaciones Digitales",
     achievement: "Mensajero Digital",
-    description: "Completa el curso Comunicaciones Digitales y transmite informacion sin errores.",
+    description: "Completa el curso Comunicaciones Digitales y transmite información sin errores.",
     semester: 7,
     credits: 6,
     area: "TIC",
@@ -496,9 +496,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-2012",
-    subject: "Ingenieria de Software",
+    subject: "Ingeniería de Software",
     achievement: "En producción",
-    description: "Completa el curso Ingenieria de Software y construye sistemas robustos y mantenibles.",
+    description: "Completa el curso Ingeniería de Software y construye sistemas robustos y mantenibles.",
     semester: 7,
     credits: 6,
     area: "FI",
@@ -510,7 +510,7 @@ export const CURRICULUM: Course[] = [
     id: "CFG-4",
     subject: "CFG",
     achievement: "Mente renacentista IV",
-    description: "Completa un Curso de Formacion General y redondea tu formacion integral.",
+    description: "Completa un Curso de Formación General y redondea tu formación integral.",
     semester: 7,
     credits: 5,
     area: "TIN",
@@ -522,9 +522,9 @@ export const CURRICULUM: Course[] = [
   // ---------------- Semestre 8 ----------------
   {
     id: "CII-2100",
-    subject: "Introduccion a la Economia",
-    achievement: "Exceso de calidad! (Y de oferta)",
-    description: "Completa el curso Introduccion a la Economia y comprende las fuerzas del mercado.",
+    subject: "Introducción a la Economía",
+    achievement: "¡Exceso de calidad! (Y de oferta)",
+    description: "Completa el curso Introducción a la Economía y comprende las fuerzas del mercado.",
     semester: 8,
     credits: 6,
     area: "SD",
@@ -534,9 +534,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-2112",
-    subject: "Tecnologias Inalambricas",
+    subject: "Tecnologías Inalámbricas",
     achievement: "Señal recibida",
-    description: "Completa el curso Tecnologias Inalambricas y domina las comunicaciones sin ataduras.",
+    description: "Completa el curso Tecnologías Inalámbricas y domina las comunicaciones sin ataduras.",
     semester: 8,
     credits: 6,
     area: "TIC",
@@ -546,9 +546,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-2113",
-    subject: "Criptografia y Seguridad en Redes",
-    achievement: "Encriptado!",
-    description: "Completa el curso Criptografia y Seguridad en Redes y protege la informacion.",
+    subject: "Criptografía y Seguridad en Redes",
+    achievement: "¡Encriptado!",
+    description: "Completa el curso Criptografía y Seguridad en Redes y protege la información.",
     semester: 8,
     credits: 6,
     area: "TIC",
@@ -560,7 +560,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-2013",
     subject: "Inteligencia Artificial",
     achievement: "Shhh… Machines Are Learning",
-    description: "Completa el curso Inteligencia Artificial y da vida a maquinas que aprenden.",
+    description: "Completa el curso Inteligencia Artificial y da vida a máquinas que aprenden.",
     semester: 8,
     credits: 6,
     area: "FI",
@@ -570,9 +570,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-2207",
-    subject: "Evaluacion de Proyectos TIC",
+    subject: "Evaluación de Proyectos TIC",
     achievement: "Visionario de la viabilidad",
-    description: "Completa el curso Evaluacion de Proyectos TIC y determina la viabilidad de una iniciativa.",
+    description: "Completa el curso Evaluación de Proyectos TIC y determina la viabilidad de una iniciativa.",
     semester: 8,
     credits: 6,
     area: "AN",
@@ -586,7 +586,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-33XX",
     subject: "Electivo Profesional",
     achievement: "Sendero Propio I",
-    description: "Completa un Electivo Profesional y especializa tu formacion.",
+    description: "Completa un Electivo Profesional y especializa tu formación.",
     semester: 9,
     credits: 6,
     area: "FI",
@@ -598,7 +598,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-3100",
     subject: "Arquitecturas Emergentes",
     achievement: "Pionero del Futuro",
-    description: "Completa el curso Arquitecturas Emergentes y adelantate a la tecnologia.",
+    description: "Completa el curso Arquitecturas Emergentes y adelántate a la tecnología.",
     semester: 9,
     credits: 6,
     area: "TIC",
@@ -610,7 +610,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-34XX",
     subject: "Electivo Profesional",
     achievement: "Sendero Propio II",
-    description: "Completa un Electivo Profesional y profundiza en tu area de interes.",
+    description: "Completa un Electivo Profesional y profundiza en tu área de interés.",
     semester: 9,
     credits: 6,
     area: "TIC",
@@ -622,7 +622,7 @@ export const CURRICULUM: Course[] = [
     id: "CIT-3000",
     subject: "Arquitectura de Software",
     achievement: "Maestro Constructor",
-    description: "Completa el curso Arquitectura de Software y disena sistemas a gran escala.",
+    description: "Completa el curso Arquitectura de Software y diseña sistemas a gran escala.",
     semester: 9,
     credits: 6,
     area: "FI",
@@ -644,9 +644,9 @@ export const CURRICULUM: Course[] = [
   },
   {
     id: "CIT-4001",
-    subject: "Practica Profesional II",
+    subject: "Práctica Profesional II",
     achievement: "Veterano del Mundo Real",
-    description: "Completa tu Practica Profesional II y consolida tu experiencia profesional.",
+    description: "Completa tu Práctica Profesional II y consolida tu experiencia profesional.",
     semester: 9,
     credits: 7,
     area: "ELEC",
@@ -666,13 +666,13 @@ export const CURRICULUM: Course[] = [
     area: "FI",
     prereqs: [],
     icon: "Sparkles",
-    type: "normal", 
+    type: "normal",
   },
   {
     id: "CIT-34XY",
     subject: "Electivo Profesional",
     achievement: "Sendero Propio IV",
-    description: "Completa un Electivo Profesional y amplia tu especializacion.",
+    description: "Completa un Electivo Profesional y amplía tu especialización.",
     semester: 10,
     credits: 6,
     area: "TIC",
@@ -720,10 +720,10 @@ export const CURRICULUM: Course[] = [
   // ---------------- Semestre 11 ----------------
   {
     id: "CIT-4002",
-    subject: "Actividad de Titulacion",
-    achievement: "Ingenieria Civil en Informatica y Telecomunicaciones",
+    subject: "Actividad de Titulación",
+    achievement: "Ingeniería Civil en Informática y Telecomunicaciones",
     description:
-      "Completa la Actividad de Titulacion y conviertete en Ingeniero/a Civil en Informatica y Telecomunicaciones. El logro final que corona todo tu recorrido.",
+      "Completa la Actividad de Titulación y conviértete en Ingeniero/a Civil en Informática y Telecomunicaciones. El logro final que corona todo tu recorrido.",
     semester: 11,
     credits: 9,
     area: "ELEC",
