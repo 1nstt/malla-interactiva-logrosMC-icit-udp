@@ -361,3 +361,71 @@
   text-overflow: ellipsis;
   max-width: 100%;
 }
+
+/* ============================================================
+   MOBILE RESPONSIVENESS
+   ============================================================ */
+
+/* ---- Mobile: Floating Complete Button ---- */
+.mc-complete-btn {
+  position: fixed;
+  left: 12px;
+  bottom: 90px;
+  z-index: 40;
+}
+
+/* ---- Mobile Floating Controls ---- */
+.mc-zoom-controls {
+  position: fixed;
+  right: 12px;
+  bottom: 90px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.mc-sem-nav {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 90px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(49, 49, 49, 0.92);
+  border: 2px solid #1a1a1a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+/* ---- Button States ---- */
+.mc-button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.mc-button--complete {
+  background: #4f7a36 !important;
+  border-color: #8ecb63 #274116 #274116 #8ecb63 !important;
+  color: #eefbe2 !important;
+  box-shadow: inset 1px 1px 0 #6fae4e, 0 0 0 1px #000, 0 0 8px rgba(127, 209, 91, 0.3) !important;
+}
+
+.mc-button--complete:hover {
+  background: #5d9040 !important;
+}
+
+.mc-button--uncomplete {
+  background: #8b4040 !important;
+  border-color: #c46b6b #4a2020 #4a2020 #c46b6b !important;
+  color: #fbe2e2 !important;
+  box-shadow: inset 1px 1px 0 #a05555, 0 0 0 1px #000 !important;
+}
+
+.mc-button--uncomplete:hover {
+  background: #a04a4a !important;
+}
