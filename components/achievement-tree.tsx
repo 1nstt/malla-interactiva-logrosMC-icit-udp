@@ -282,6 +282,23 @@ export function AchievementTree() {
     })
   }
 
+  // Toggle a whole semester: if every course is done, clear them; otherwise complete all.
+  const toggleSemester = (ids: string[]) => {
+    playClickSound()
+
+    setCompleted((prev) => {
+      const next = new Set(prev)
+      const allDone = ids.every((id) => next.has(id))
+
+      for (const id of ids) {
+        if (allDone) next.delete(id)
+        else next.add(id)
+      }
+
+      return next
+    })
+  }
+
   // Node click: mobile selects (hover), desktop toggles
   const handleNodeClick = (id: string, e?: React.MouseEvent) => {
     if (isMobile) {
@@ -385,16 +402,31 @@ export function AchievementTree() {
                 : {}),
             }}
           >
-            {/* Semester header labels */}
-            {cols.map((col) => (
-              <div
-                key={`sem-label-${col.semester}`}
-                className="absolute font-mc text-[8px] text-[#565656]"
-                style={{ left: col.x + (COL_W - NODE) / 2, top: 20 }}
-              >
-                SEM {col.semester}
-              </div>
-            ))}
+            {/* Semester header buttons */}
+            {cols.map((col) => {
+              const total = col.ids.length
+              const doneCount = col.ids.filter((id) => completed.has(id)).length
+              const allDone = doneCount === total
+              return (
+                <button
+                  key={`sem-${col.semester}`}
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    toggleSemester(col.ids)
+                  }}
+                  className="mc-sem-btn absolute grid place-items-center gap-0.5"
+                  style={{ left: col.x - (COL_W - NODE) / 2, top: 20, width: COL_W - 24 } as CSSProperties}
+                  aria-label={`Marcar semestre ${col.semester} completo`}
+                  data-done={allDone || undefined}
+                >
+                  <span className="font-mc text-[8px] leading-none">Sem {col.semester}</span>
+                  <span className="font-mc-body text-sm leading-none opacity-80">
+                    {doneCount}/{total}
+                  </span>
+                </button>
+              )
+            })}
 
             {/* Connectors */}
             <svg className="pointer-events-none absolute inset-0" width={width} height={height} aria-hidden="true">
@@ -539,18 +571,18 @@ export function AchievementTree() {
 
           {/* Floating minimized control bar (shown when card is minimized on mobile) */}
           {hoveredCourse && cardMinimized && (
-            <div className="mc-minimized-bar flex items-center gap-2">
+            <div className="mc-minimized-bar flex items-center gap-1.5 max-w-[calc(100vw-24px)]">
               <button
                 type="button"
                 onClick={() => setCardMinimized(false)}
-                className="mc-button font-mc text-[9px] flex items-center gap-1 !px-2.5 !py-1"
+                className="mc-button font-mc text-[9px] flex items-center gap-1 !px-2 !py-1 text-left leading-tight break-words max-w-[210px]"
               >
-                👁 Ver tarjeta ({hoveredCourse.id})
+                👁 Ver tarjeta ({hoveredCourse.subject})
               </button>
               <button
                 type="button"
                 onClick={() => toggle(hoveredCourse.id)}
-                className={`mc-button font-mc text-[9px] !px-2.5 !py-1 ${
+                className={`mc-button font-mc text-[9px] !px-2 !py-1 shrink-0 ${
                   completed.has(hoveredCourse.id) ? "mc-button--uncomplete" : "mc-button--complete"
                 }`}
               >
@@ -698,8 +730,8 @@ function MinecraftTooltip({
         className="mc-tooltip mc-tooltip--mobile pointer-events-auto fixed z-50 transition-all duration-150"
         style={{ left, top, width: TOOLTIP_W }}
       >
-        <div className="flex items-center justify-between gap-1 mb-1">
-          <p className={`font-mc text-[10px] leading-relaxed truncate ${titleColor}`}>{course.achievement}</p>
+        <div className="flex items-start justify-between gap-1 mb-1">
+          <p className={`font-mc text-[10px] leading-snug break-words flex-1 ${titleColor}`}>{course.achievement}</p>
           {onMinimize && (
             <button
               type="button"
