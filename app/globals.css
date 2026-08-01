@@ -283,6 +283,12 @@
   box-shadow: 0 0 0 2px #0b0016, 0 6px 18px rgba(0, 0, 0, 0.6);
 }
 
+.mc-tooltip--mobile {
+  background: rgba(22, 0, 31, 0.94);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 2px #0b0016, 0 8px 24px rgba(0, 0, 0, 0.8);
+}
+
 /* Per-semester header buttons */
 .mc-sem-btn {
   padding: 6px 4px;
@@ -366,19 +372,11 @@
    MOBILE RESPONSIVENESS
    ============================================================ */
 
-/* ---- Mobile: Floating Complete Button ---- */
-.mc-complete-btn {
-  position: fixed;
-  left: 12px;
-  bottom: 90px;
-  z-index: 40;
-}
-
-/* ---- Mobile Floating Controls ---- */
+/* ---- Mobile Floating Zoom Controls (Bottom Right) ---- */
 .mc-zoom-controls {
   position: fixed;
   right: 12px;
-  bottom: 90px;
+  bottom: 75px;
   z-index: 40;
   display: flex;
   flex-direction: column;
@@ -386,20 +384,14 @@
   gap: 4px;
 }
 
-.mc-sem-nav {
+/* ---- Mobile Minimized Card Floating Bar (Bottom Center) ---- */
+.mc-minimized-bar {
   position: fixed;
   left: 50%;
   transform: translateX(-50%);
-  bottom: 90px;
+  bottom: 75px;
   z-index: 40;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(49, 49, 49, 0.92);
-  border: 2px solid #1a1a1a;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-  padding: 4px 8px;
-  border-radius: 4px;
+  animation: mc-fade-in 0.15s ease forwards;
 }
 
 /* ---- Button States ---- */

@@ -140,8 +140,8 @@ export function AchievementTree() {
   // ---- Mobile-specific state ----
   const [scale, setScale] = useState(1)
   const scaleRef = useRef(1)
-  const [currentSem, setCurrentSem] = useState(1)
   const movedRef = useRef(false)
+  const [cardMinimized, setCardMinimized] = useState(false)
 
   // Keep scaleRef in sync for touch handlers (avoids stale closures)
   useEffect(() => { scaleRef.current = scale }, [scale])
@@ -155,16 +155,16 @@ export function AchievementTree() {
       setScale(1)
       scaleRef.current = 1
       setHovered(null)
+      setCardMinimized(false)
     }
   }, [isMobile])
 
-  // ---- Pinch-to-zoom + manual panning (mobile) ----
+  // ---- Pinch-to-zoom & touch scroll tracking (mobile) ----
   useEffect(() => {
     if (!isMobile) return
     const el = scrollRef.current
     if (!el) return
 
-    let panStart: { x: number; y: number; sl: number; st: number } | null = null
     let pinchStart: { dist: number; scale: number } | null = null
 
     const getDist = (touches: TouchList) =>
@@ -172,31 +172,14 @@ export function AchievementTree() {
 
     const onTouchStart = (e: TouchEvent) => {
       movedRef.current = false
-      if (e.touches.length === 1) {
-        panStart = {
-          x: e.touches[0].clientX,
-          y: e.touches[0].clientY,
-          sl: el.scrollLeft,
-          st: el.scrollTop,
-        }
-        pinchStart = null
-      } else if (e.touches.length === 2) {
-        panStart = null
+      if (e.touches.length === 2) {
         pinchStart = { dist: getDist(e.touches), scale: scaleRef.current }
       }
     }
 
     const onTouchMove = (e: TouchEvent) => {
-      e.preventDefault()
-      if (e.touches.length === 1 && panStart) {
-        const dx = e.touches[0].clientX - panStart.x
-        const dy = e.touches[0].clientY - panStart.y
-        if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-          movedRef.current = true
-        }
-        el.scrollLeft = panStart.sl - dx
-        el.scrollTop = panStart.st - dy
-      } else if (e.touches.length === 2 && pinchStart) {
+      if (e.touches.length === 2 && pinchStart) {
+        e.preventDefault()
         movedRef.current = true
         const ratio = getDist(e.touches) / pinchStart.dist
         const newScale = Math.min(1.2, Math.max(0.25, pinchStart.scale * ratio))
@@ -206,43 +189,27 @@ export function AchievementTree() {
     }
 
     const onTouchEnd = () => {
-      panStart = null
       pinchStart = null
     }
 
-    el.addEventListener("touchstart", onTouchStart, { passive: false })
+    const onScroll = () => {
+      movedRef.current = true
+    }
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true })
     el.addEventListener("touchmove", onTouchMove, { passive: false })
     el.addEventListener("touchend", onTouchEnd)
     el.addEventListener("touchcancel", onTouchEnd)
+    el.addEventListener("scroll", onScroll, { passive: true })
 
     return () => {
       el.removeEventListener("touchstart", onTouchStart)
       el.removeEventListener("touchmove", onTouchMove)
       el.removeEventListener("touchend", onTouchEnd)
       el.removeEventListener("touchcancel", onTouchEnd)
+      el.removeEventListener("scroll", onScroll)
     }
   }, [isMobile])
-
-  // ---- Track current semester from scroll position (mobile) ----
-  useEffect(() => {
-    if (!isMobile) return
-    const el = scrollRef.current
-    if (!el) return
-
-    const onScroll = () => {
-      const viewCenterX = (el.scrollLeft + el.clientWidth / 2) / scale
-      let closest = cols[0]?.semester ?? 1
-      let minDist = Infinity
-      for (const col of cols) {
-        const d = Math.abs(col.x + NODE / 2 - viewCenterX)
-        if (d < minDist) { minDist = d; closest = col.semester }
-      }
-      setCurrentSem(closest)
-    }
-
-    el.addEventListener("scroll", onScroll, { passive: true })
-    return () => el.removeEventListener("scroll", onScroll)
-  }, [isMobile, scale, cols])
 
   // ---- Background music ----
   const bgAudioRef = useRef<HTMLAudioElement | null>(null)
@@ -315,46 +282,17 @@ export function AchievementTree() {
     })
   }
 
-  // Toggle a whole semester: if every course is done, clear them; otherwise complete all.
-  const toggleSemester = (ids: string[]) => {
-    playClickSound()
-
-    setCompleted((prev) => {
-      const next = new Set(prev)
-      const allDone = ids.every((id) => next.has(id))
-
-      for (const id of ids) {
-        if (allDone) next.delete(id)
-        else next.add(id)
-      }
-
-      return next
-    })
-  }
-
-  // ---- Node click: mobile selects (hover), desktop toggles ----
+  // Node click: mobile selects (hover), desktop toggles
   const handleNodeClick = (id: string, e?: React.MouseEvent) => {
     if (isMobile) {
       if (movedRef.current) return // Ignore click after drag/pinch
       e?.stopPropagation() // Prevent the viewport onClick from clearing immediately
       setHovered(id)
+      setCardMinimized(false)
       if (e) setPointer({ x: e.clientX, y: e.clientY })
     } else {
       toggle(id)
     }
-  }
-
-  // ---- Semester navigation (mobile) ----
-  const minSem = cols[0]?.semester ?? 1
-  const maxSem = cols[cols.length - 1]?.semester ?? 11
-
-  const scrollToSemester = (sem: number) => {
-    const col = cols.find((c) => c.semester === sem)
-    if (!col || !scrollRef.current) return
-    const el = scrollRef.current
-    const targetX = (col.x + NODE / 2) * scale - el.clientWidth / 2
-    el.scrollTo({ left: Math.max(0, targetX), behavior: "smooth" })
-    setCurrentSem(sem)
   }
 
   // ---- Progress stats (credits + course count) ----
@@ -422,9 +360,14 @@ export function AchievementTree() {
       <div
         ref={scrollRef}
         onMouseMove={onMove}
-        onClick={() => { if (isMobile) setHovered(null) }}
+        onClick={() => {
+          if (isMobile) {
+            setHovered(null)
+            setCardMinimized(false)
+          }
+        }}
         className="mc-tree-bg relative flex-1 overflow-auto"
-        style={isMobile ? { touchAction: "none" } : undefined}
+        style={isMobile ? { touchAction: "pan-x pan-y" } : undefined}
       >
         {/* Scale wrapper — on mobile, the outer div sets the scrollable area
             to match the scaled canvas, while the inner div applies the CSS
@@ -442,33 +385,18 @@ export function AchievementTree() {
                 : {}),
             }}
           >
-            {/* Semester header buttons */}
-            {cols.map((col) => {
-              const total = col.ids.length
-              const doneCount = col.ids.filter((id) => completed.has(id)).length
-              const allDone = doneCount === total
-              return (
-                <button
-                  key={`sem-${col.semester}`}
-                  type="button"
-                  onClick={() => toggleSemester(col.ids)}
-                  className="mc-sem-btn absolute grid place-items-center gap-0.5"
-                  style={{ left: col.x - (COL_W - NODE) / 2, top: 20, width: COL_W - 24 } as CSSProperties}
-                  aria-label={`Marcar semestre ${col.semester} completo`}
-                  data-done={allDone || undefined}
-                >
-                  <span className="font-mc text-[8px] leading-none">Sem {col.semester}</span>
-                  <span className="font-mc-body text-sm leading-none opacity-80">
-                    {doneCount}/{total}
-                  </span>
-                </button>
-              )
-            })}
+            {/* Semester header labels */}
+            {cols.map((col) => (
+              <div
+                key={`sem-label-${col.semester}`}
+                className="absolute font-mc text-[8px] text-[#565656]"
+                style={{ left: col.x + (COL_W - NODE) / 2, top: 20 }}
+              >
+                SEM {col.semester}
+              </div>
+            ))}
 
-            {/* Connectors — every edge is drawn as a faint dotted line for context;
-                when a node is hovered, its prerequisite chain and what it unlocks
-                are highlighted as solid lines. Drawing every edge solid at once
-                turned the dense curriculum graph into unreadable spaghetti. */}
+            {/* Connectors */}
             <svg className="pointer-events-none absolute inset-0" width={width} height={height} aria-hidden="true">
               {placed.map((c) =>
                 c.prereqs.map((pid) => {
@@ -476,7 +404,6 @@ export function AchievementTree() {
                   if (!p) return null
                   const key = `${pid}->${c.id}`
                   const active = hovered ? relatedEdges.has(key) : false
-                  // Skip the faint version for active edges (the solid pass covers them).
                   if (!active) {
                     const sx = p.x + p.size
                     const sy = p.y + p.size / 2
@@ -570,22 +497,24 @@ export function AchievementTree() {
           </div>
         </div>
 
-        {/* Tooltip (shown on hover for desktop, on tap for mobile) */}
-        {hoveredCourse && (
+        {/* Tooltip (shown on hover for desktop, on tap for mobile when not minimized) */}
+        {hoveredCourse && (!isMobile || !cardMinimized) && (
           <MinecraftTooltip
             course={hoveredCourse}
             done={completed.has(hoveredCourse.id)}
             available={isAvailable(hoveredCourse)}
             x={pointer.x}
             y={pointer.y}
+            isMobile={isMobile}
+            onToggle={() => toggle(hoveredCourse.id)}
+            onMinimize={() => setCardMinimized(true)}
           />
         )}
       </div>
 
-      {/* ---- Mobile floating controls ---- */}
+      {/* ---- Mobile floating zoom controls & minimized pill bar ---- */}
       {isMobile && (
         <>
-          {/* Zoom controls */}
           <div className="mc-zoom-controls">
             <button
               type="button"
@@ -608,46 +537,28 @@ export function AchievementTree() {
             </button>
           </div>
 
-          {/* Semester navigation */}
-          <div className="mc-sem-nav">
-            <button
-              type="button"
-              className="mc-button font-mc text-xs !px-2 !py-1"
-              onClick={() => scrollToSemester(currentSem - 1)}
-              disabled={currentSem <= minSem}
-              aria-label="Semestre anterior"
-            >
-              ◀
-            </button>
-            <span className="font-mc text-[9px] text-[#e6e6e6] min-w-[48px] text-center">
-              Sem {currentSem}
-            </span>
-            <button
-              type="button"
-              className="mc-button font-mc text-xs !px-2 !py-1"
-              onClick={() => scrollToSemester(currentSem + 1)}
-              disabled={currentSem >= maxSem}
-              aria-label="Semestre siguiente"
-            >
-              ▶
-            </button>
-          </div>
+          {/* Floating minimized control bar (shown when card is minimized on mobile) */}
+          {hoveredCourse && cardMinimized && (
+            <div className="mc-minimized-bar flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setCardMinimized(false)}
+                className="mc-button font-mc text-[9px] flex items-center gap-1 !px-2.5 !py-1"
+              >
+                👁 Ver tarjeta ({hoveredCourse.id})
+              </button>
+              <button
+                type="button"
+                onClick={() => toggle(hoveredCourse.id)}
+                className={`mc-button font-mc text-[9px] !px-2.5 !py-1 ${
+                  completed.has(hoveredCourse.id) ? "mc-button--uncomplete" : "mc-button--complete"
+                }`}
+              >
+                {completed.has(hoveredCourse.id) ? "✕ Descompletar" : "✓ Completar"}
+              </button>
+            </div>
+          )}
         </>
-      )}
-
-      {/* ---- Mobile: floating complete button (appears when a course is selected) ---- */}
-      {isMobile && hoveredCourse && (
-        <div className="mc-complete-btn">
-          <button
-            type="button"
-            onClick={() => toggle(hoveredCourse.id)}
-            className={`mc-button font-mc text-[9px] whitespace-nowrap ${
-              completed.has(hoveredCourse.id) ? "mc-button--uncomplete" : "mc-button--complete"
-            }`}
-          >
-            {completed.has(hoveredCourse.id) ? "✕ Descompletar" : "✓ Completar"}
-          </button>
-        </div>
       )}
 
       {/* Bottom bar */}
@@ -736,28 +647,113 @@ function MinecraftTooltip({
   available,
   x,
   y,
+  isMobile,
+  onToggle,
+  onMinimize,
 }: {
   course: Course
   done: boolean
   available: boolean
   x: number
   y: number
+  isMobile?: boolean
+  onToggle?: () => void
+  onMinimize?: () => void
 }) {
-  const TOOLTIP_W = 300
-  const TOOLTIP_H = 190
-  // Clamp against the viewport since the tooltip is position:fixed.
-  const vw = typeof window !== "undefined" ? window.innerWidth : 0
-  const vh = typeof window !== "undefined" ? window.innerHeight : 0
-  const flipX = x + TOOLTIP_W + 28 > vw
-  const rawLeft = flipX ? x - TOOLTIP_W - 16 : x + 16
-  const left = Math.max(8, Math.min(rawLeft, vw - TOOLTIP_W - 8))
-  const top = Math.min(Math.max(8, y + 16), Math.max(8, vh - TOOLTIP_H))
-
   const titleColor =
     course.type === "challenge" ? "text-[#ffcf3f]" : course.type === "goal" ? "text-[#7fd15b]" : "text-[#f4f4f4]"
 
   const statusText = done ? "Logro desbloqueado" : available ? "Disponible" : "Bloqueado · faltan prerrequisitos"
   const statusColor = done ? "text-[#7fd15b]" : available ? "text-[#c8c8c8]" : "text-[#e06c6c]"
+
+  const vw = typeof window !== "undefined" ? window.innerWidth : 0
+  const vh = typeof window !== "undefined" ? window.innerHeight : 0
+
+  if (isMobile) {
+    const TOOLTIP_W = Math.min(250, vw - 24)
+    const TOOLTIP_H = 195
+    const footerOffset = 110 // height of footer + padding
+
+    // Center horizontally on the touch point / node
+    const centeredLeft = x - TOOLTIP_W / 2
+    const left = Math.max(12, Math.min(centeredLeft, vw - TOOLTIP_W - 12))
+
+    // Prefer placing ABOVE the node (offset vertically by 35px so node & horizontal arrows remain clear)
+    let top = y - TOOLTIP_H - 35
+    let placement: "above" | "below" = "above"
+
+    // If placing above goes off-screen near top header (< 50px), place it BELOW the node
+    if (top < 50) {
+      top = y + 45
+      placement = "below"
+    }
+
+    // If placing below hits the footer, clamp it above footer
+    if (placement === "below" && top + TOOLTIP_H > vh - footerOffset) {
+      top = Math.max(50, vh - TOOLTIP_H - footerOffset)
+    }
+
+    return (
+      <div
+        className="mc-tooltip mc-tooltip--mobile pointer-events-auto fixed z-50 transition-all duration-150"
+        style={{ left, top, width: TOOLTIP_W }}
+      >
+        <div className="flex items-center justify-between gap-1 mb-1">
+          <p className={`font-mc text-[10px] leading-relaxed truncate ${titleColor}`}>{course.achievement}</p>
+          {onMinimize && (
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                onMinimize()
+              }}
+              className="mc-button font-mc text-[8px] !px-1.5 !py-0.5 shrink-0"
+              title="Ocultar tarjeta para ver las flechas"
+            >
+              👁 Ocultar
+            </button>
+          )}
+        </div>
+        <p className="mt-1 font-mc-body text-base leading-tight text-[#d6d6d6]">{course.description}</p>
+        <div className="mt-2 border-t border-[#3a3a5a] pt-1.5">
+          <p className="font-mc-body text-sm text-[#9a9ad0]">
+            <span className="font-semibold" style={{ color: AREA_COLORS[course.area] }}>
+              {course.subject}
+            </span>{" "}
+            · {course.id}
+          </p>
+          <p className="font-mc-body text-xs" style={{ color: AREA_COLORS[course.area] }}>
+            {AREA_LABELS[course.area]} · {course.credits} créditos
+          </p>
+          <p className={`mt-0.5 font-mc-body text-sm ${statusColor}`}>{statusText}</p>
+        </div>
+
+        {onToggle && (
+          <div className="mt-2 pt-2 border-t border-[#3a3a5a]">
+            <button
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                onToggle()
+              }}
+              className={`mc-button font-mc w-full text-[9px] py-1.5 ${
+                done ? "mc-button--uncomplete" : "mc-button--complete"
+              }`}
+            >
+              {done ? "✕ Descompletar" : "✓ Completar"}
+            </button>
+          </div>
+        )}
+      </div>
+    )
+  }
+
+  const TOOLTIP_W = 300
+  const TOOLTIP_H = 190
+  const flipX = x + TOOLTIP_W + 28 > vw
+  const rawLeft = flipX ? x - TOOLTIP_W - 16 : x + 16
+  const left = Math.max(8, Math.min(rawLeft, vw - TOOLTIP_W - 8))
+  const top = Math.min(Math.max(8, y + 16), Math.max(8, vh - TOOLTIP_H))
 
   return (
     <div className="mc-tooltip pointer-events-none fixed z-50" style={{ left, top, width: TOOLTIP_W }}>
