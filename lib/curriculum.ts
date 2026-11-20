@@ -301,7 +301,7 @@ export const CURRICULUM: Course[] = [
   {
     id: "CII-2750",
     subject: "Optimización",
-    achievement: "Óptimo global alcanzado",
+    achievement: "Optimizador!",
     description: "Completa el curso Optimización y encuentra siempre la mejor solución.",
     semester: 5,
     credits: 6,
